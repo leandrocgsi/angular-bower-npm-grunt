@@ -2,8 +2,11 @@ module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-karma');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.initConfig({
+    'pkg': grunt.file.readJSON('package.json'),
 
     'meta': {
       'jsFilesForTesting': [
@@ -33,7 +36,25 @@ module.exports = function (grunt) {
 
     'jshint': {
       'beforeconcat': ['source/**/*.js'],
-    }
+    },
+
+    'concat': {
+      'dist': {
+        'src': ['source/**/*.js'],
+        'dest': 'dist/<%= pkg.namelower %>-<%= pkg.version %>.js'
+      }
+    },
+
+    'uglify': {
+      'options': {
+        'mangle': false
+      },
+      'dist': {
+        'files': {
+          'dist/<%= pkg.namelower %>-<%= pkg.version %>.min.js': ['dist/<%= pkg.namelower %>-<%= pkg.version %>.js']
+        }
+      }
+    },
 
   });
 
