@@ -1,8 +1,10 @@
 module.exports = function (grunt) {
 
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
 
   grunt.initConfig({
+
     'meta': {
       'jsFilesForTesting': [
         'bower_components/jquery/jquery.js',
@@ -26,8 +28,13 @@ module.exports = function (grunt) {
             'source/**/*.js'
           ],
         }
-      }
-	}
+      },
+    },
+
+    'jshint': {
+      'beforeconcat': ['source/**/*.js'],
+    }
+
   });
 
   grunt.registerTask('test', ['karma:development']);
